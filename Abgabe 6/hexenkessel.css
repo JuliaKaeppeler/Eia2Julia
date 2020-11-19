@@ -1,0 +1,44 @@
+body {
+    background-color: rgb(172, 206, 138);
+    }
+
+h1 {
+    color: black;
+    font-family: fantasy;
+    text-align: center;
+    font-size: 50px;
+}
+
+h2 {
+    color: black;
+    font-family: fantasy;
+    font-size: 30px;
+}
+
+p {
+    color: black;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+}
+
+#hexenkessel {
+    width: 200px;
+}
+
+.flex { 
+    background-color: rgb(172, 206, 138);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+
+  div {
+    padding: 10px;
+    border: none;
+    margin: 5px;
+    font-family: fantasy;
+    font-size: 30px;
+    padding: 20px;
+    background: #eee;
+  }
