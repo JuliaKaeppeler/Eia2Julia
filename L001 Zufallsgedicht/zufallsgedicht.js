@@ -4,7 +4,7 @@ var Zufallsgedicht;
     var praedikat = ["braut", "liebt", "studiert", "hasst", "zaubert", "zerstoert"];
     var object = ["Zaubertraenke", "den Grimm", "Lupin", "Hogwarts", "die Karte des Rumtreibers", "Dementoren"];
     // console.log(subject, praedikat, object);
-    for (var i = 6; i > 0; i--) {
+    for (var i = 6; i > 1; i--) {
         // console.log(i);
         getVerse(subject, praedikat, object);
     }

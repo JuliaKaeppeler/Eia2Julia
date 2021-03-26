@@ -5,7 +5,7 @@ namespace Zufallsgedicht {
 
     // console.log(subject, praedikat, object);
 
-    for (let i: number = 6; i > 0; i--) {
+    for (let i: number = 6; i > 1; i--) {
        // console.log(i);
         getVerse(subject, praedikat, object);
     }
