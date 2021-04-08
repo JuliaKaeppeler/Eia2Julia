@@ -8,7 +8,11 @@ button {
     font-family: 'Montserrat', sans-serif;
     background-color: white;
     border-color: rgb(249, 65, 160);
-    border-style: double;
     border-radius: 10px;
+    border-style:groove;
     border-width: 1px;
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
 }
