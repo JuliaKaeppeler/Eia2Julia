@@ -1,0 +1,36 @@
+body {
+    background-color: rgb(223, 221, 221);
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#div0 {
+    float: left; 
+    width: 700px;
+    height: 800px;
+    border-style: groove;
+    border-color: black;
+    margin-left: 100px;
+}
+
+#div1 {
+    float: right;
+    width: 700px;
+    height: 800px;
+    border-style: groove;
+    border-color: black;
+    margin-right: 100px;
+    
+}
+
+span {
+    color: black;
+    width: 350px;
+    height: 150px;
+    position: fixed;
+    border-style: solid;
+    background-color: rgb(242, 205, 218);
+    font-family: 'Montserrat', sans-serif;
+}
