@@ -4,6 +4,10 @@ body {
     background-color: rgb(242, 205, 218);
 }
 
+p {
+    font-family: 'Montserrat', sans-serif;
+}
+
 button {
     font-size: 30px;
     color: rgb(249, 65, 160);
