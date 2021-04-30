@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="memory.css" type="text/css" media="screen"/>
     <script src="memory.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&display=swap" rel="stylesheet">
     <title>Memory</title>
 </head>
 <body>
     <form>
         <fieldset class="fsSelection" id="fsSelection">
             <legend>Style your Memory</legend>
-            Choose font:<br>
+            Select font:<br>
             <input type="radio" name="Radiogroup" value="Arial" id="radio1" />
             <label for="radio1">Arial</label>
             <input type="radio" name="Radiogroup" value="Helvetica" id="radio2" />
@@ -20,22 +22,22 @@
             <input type="radio" name="Radiogroup" value="Calibri" id="radio3" />
             <label for="radio3">Calibri</label>
             <hr/>
-            Choose pair of memory cards:
+        Select pair of cards:
 		<input class="stepper" type="number" name="Stepper" step="1" min="5" max="25" value="5" />
 		<hr />
-            Choose size of memory cards:
+        Select size of cards:
 		<input class="slider" type="range" name="Slider" min="0" max="1" step="0.1" value="0" />
 		<hr />
-        Choose background color
-		<input  class="backgroundColor" type="color" name="Color" placeholder="red" id="color" value="#ff0000">
+        Select background color
+		<input  class="backgroundColor" type="color" name="Color" placeholder="green" id="color" value="#008800">
 		<hr />
-        Choose back color
-		<input class="frontColor" type="color" name="Color" placeholder="red" id="color" value="#ff0000">
+        Select back color
+		<input class="frontColor" type="color" name="Color" placeholder="green" id="color" value="#008800">
 		<hr />
-        Choose font-color 
-		<input class="fontColor" type="color" name="Color" placeholder="red" id="color" value="#ff0000">
+        Select font-color 
+		<input class="fontColor" type="color" name="Color" placeholder="green" id="color" value="#008800">
 		<hr />
-        <button type="button "class="button" style="vertical-align:middle"><span>start game</span></button>
+        <button type="button "class="button" style="vertical-align:middle"><span>start</span></button>
         </fieldset>
     </form>
 </body>
