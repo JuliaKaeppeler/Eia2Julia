@@ -327,7 +327,7 @@ namespace meadow {
         // crc2.closePath();
 
     }
-
+    // Hintergrund
     function drawBackground(): void {
         console.log("Background");
 
