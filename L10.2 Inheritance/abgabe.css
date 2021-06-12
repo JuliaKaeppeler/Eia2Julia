@@ -1,0 +1,20 @@
+body {
+    text-align: center;
+    margin-top: 80px;
+    background-color: rgb(242, 205, 218);
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    font-size: 30px;
+    color: rgb(249, 65, 160);
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+    border-color: rgb(249, 65, 160);
+    border-style: double;
+    border-radius: 10px;
+    border-width: 1px;
+}
