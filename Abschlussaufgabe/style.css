@@ -1,0 +1,42 @@
+/* body {
+    background-image: url("bilder/arena.jpg");
+    background-size:cover;
+} */
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+}
+
+legend {
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#formular {
+    width: 20%;
+    float: left;
+    margin-left: 5%;
+    margin-top: 2%;
+}
+
+#soccerfield {
+    float: right;
+    margin-right: 10%;
+    margin-top: 2%;
+}
+
+.score {
+    text-align: center;
+}
+
+canvas {
+    border-radius: 10px;
+}

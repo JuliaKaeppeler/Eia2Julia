@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="main.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&display=swap" rel="stylesheet">
+    <title>Soccer Game Online</title>
+</head>
+<body>
+    <h1>Soccer Game Online</h1>
+    
+    <div id="formular">
+
+    <form>
+
+        <fieldset>
+            <legend>Jersey -Team 1</legend>
+            <input type="color" name="jerseyColor" value="#ff0000">
+        </fieldset>
+
+        <fieldset>
+            <legend>Jersey -Team 2</legend>
+            <input type="color" name="jerseyColor" value="#00ff00">
+        </fieldset>
+
+        <fieldset>
+            <legend>Choose velocity</legend>
+            <p>Min. velocity</p>
+            <span>
+                1
+                <input type="range" name="minVelocity" min=0 max=10 step=1 value="2">
+                5
+            </span>
+            <p>Max. velocity</p>
+            <span>
+                6
+                <input type="range" name="minVelocity" min = 0 max = 10 step=1 value="8">
+                10
+            </span>
+        </fieldset>
+
+        <fieldset>
+            <legend>Choose precision</legend>
+            <p>Min. precision</p>
+            <span>
+                1
+                <input type="range" name="minVelocity" min=0 max=10 step=1 value="2">
+                5
+            </span>
+            <p>Max. precision</p>
+            <span>
+                6
+                <input type="range" name="minVelocity" min=0 max=10 step=1 value="8">
+                10
+            </span>
+        </fieldset>
+    </form>
+
+    <button>Start</button>
+
+    </div>
+
+    <div id="soccerfield">
+    <canvas width="800" height="600"></canvas>
+    <p class="score">Score</p>
+    <p class="score">Possession</p>
+    </div>
+    
+
+</body>
+</html>
