@@ -1,42 +1,83 @@
+"use strict";
 var Soccer;
 (function (Soccer) {
     window.addEventListener("load", handleLoad);
-    var moveables = [];
+    let moveables = [];
+    let player = [];
+    let form;
+    let startButton;
     function handleLoad(_event) {
-        var canvas = document.querySelector("canvas");
+        // let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
+        let canvas = document.querySelector("canvas");
         if (!canvas)
             return;
         Soccer.crc2 = canvas.getContext("2d");
         drawSoccerfield();
-        var soccerfield = Soccer.crc2.getImageData(0, 0, 800, 600);
+        let soccerfield = Soccer.crc2.getImageData(0, 0, 800, 600);
         createBall(1);
         createReferee(1);
-        createLinesman(2);
-        createPlayer(22);
+        createLinesman(1);
+        form = document.querySelector("form");
+        form.addEventListener("change", handleChange);
+        startButton = document.querySelector("#startButton");
+        startButton.addEventListener("click", createPlayer); // createPlayer wird aufgerufe
         window.setInterval(update, 20, soccerfield);
     }
+    function handleChange(_event) {
+        _event.preventDefault();
+        let formData = new FormData(document.forms[0]);
+        player = [];
+        for (let entry of formData.entries()) {
+            player.push(String(entry[1]));
+        }
+    }
     function createBall(_ballNumber) {
-        for (var i = 0; i < _ballNumber; i++) {
-            var ball = new Soccer.Ball();
+        for (let i = 0; i < _ballNumber; i++) {
+            let ball = new Soccer.Ball();
             moveables.push(ball);
         }
     }
     function createReferee(_refereeNumber) {
-        for (var i = 0; i < _refereeNumber; i++) {
-            var referee = new Soccer.Referee();
+        for (let i = 0; i < _refereeNumber; i++) {
+            let referee = new Soccer.Referee();
             moveables.push(referee);
         }
     }
-    function createLinesman(_linesmanNumber) {
-        for (var i = 0; i < _linesmanNumber; i++) {
-            var linesman = new Soccer.Linesman();
-            moveables.push(linesman);
+    function createLinesman(_nLinesman) {
+        for (let i = 0; i < _nLinesman; i++) {
+            let linesman1 = new Soccer.Linesman();
+            linesman1.position.x = 900 * Math.random(); // setzt position.x von Linesman
+            linesman1.position.y = 20;
+            linesman1.velocity.x = Math.random();
+            linesman1.velocity.y = 0;
+            moveables.push(linesman1); //Werte des ersten Linienrichters in das Array pushen
+            let linesman2 = new Soccer.Linesman();
+            moveables.push(linesman2);
         }
     }
-    function createPlayer(_playerNumber) {
-        for (var i = 0; i < _playerNumber; i++) {
-            var player = new Soccer.Player();
-            moveables.push(player);
+    function createPlayer() {
+        let element = document.getElementById("startButton");
+        element.disabled = true;
+        for (let i = 0; i < 22; i++) {
+            if (i <= 10) {
+                let firstTeam = new Soccer.Player();
+                //firstTeam.colorTeamOne = "blue";
+                firstTeam.colorTeam1 = player[0];
+                //firstTeam.precisionMax = player[4] + "px";
+                //firstTeam.precisionMin = player[5] + "px";
+                moveables.push(firstTeam);
+            }
+            else {
+                let secondTeam = new Soccer.Player();
+                //secondTeam.colorTeamTwo = "red";
+                secondTeam.colorTeam2 = player[1];
+                // secondTeam.precisionMax = player[4] + "px";
+                // secondTeam.precisionMin = player[5] + "px";
+                // secondTeam.position.x = 500; // setzt position.x von Linesman
+                // secondTeam.position.y = 100;
+                // secondTeam.velocity.x = Math.random();
+                moveables.push(secondTeam);
+            }
         }
     }
     function drawSoccerfield() {
@@ -108,8 +149,7 @@ var Soccer;
     }
     function update(_soccerfield) {
         Soccer.crc2.putImageData(_soccerfield, 0, 0);
-        for (var _i = 0, moveables_1 = moveables; _i < moveables_1.length; _i++) {
-            var moveable = moveables_1[_i];
+        for (let moveable of moveables) {
             moveable.draw();
             moveable.move(1);
         }

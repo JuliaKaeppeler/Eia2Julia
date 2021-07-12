@@ -1,9 +1,10 @@
 namespace Soccer {
 
     export class Linesman extends Moveable {
-       protected color: string;   
-       protected position: Vector;
-       protected velocity: Vector;
+        public position: Vector;
+        public velocity: Vector;
+        protected color: string;   
+       
 
        constructor(_position?: Vector) {
         super(_position);

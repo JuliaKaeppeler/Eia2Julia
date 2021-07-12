@@ -1,44 +1,29 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+"use strict";
 var Soccer;
 (function (Soccer) {
-    var Ball = /** @class */ (function (_super) {
-        __extends(Ball, _super);
-        function Ball(_position) {
-            var _this = _super.call(this, _position) || this;
-            var x = 800 * Math.random();
-            var y = 500 * Math.random();
-            var a = -Math.random(); // Velocity
-            var b = 3 * Math.random(); // Velocity
-            _this.position = new Soccer.Vector(x, y);
-            _this.color = "black";
+    class Ball extends Soccer.Moveable {
+        constructor(_position) {
+            super(_position);
+            let x = 800 * Math.random();
+            let y = 500 * Math.random();
+            let a = -Math.random(); // Velocity
+            let b = 3 * Math.random(); // Velocity
+            this.position = new Soccer.Vector(x, y);
+            this.color = "black";
             if (_position)
-                _this.position = _position;
+                this.position = _position;
             else
-                _this.position = new Soccer.Vector(x, y);
-            _this.velocity = new Soccer.Vector(a, b);
-            return _this;
+                this.position = new Soccer.Vector(x, y);
+            this.velocity = new Soccer.Vector(a, b);
         }
-        Ball.prototype.draw = function () {
+        draw() {
             Soccer.crc2.beginPath();
             Soccer.crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
             Soccer.crc2.fillStyle = this.color;
             Soccer.crc2.fill();
             Soccer.crc2.closePath();
-        };
-        return Ball;
-    }(Soccer.Moveable));
+        }
+    }
     Soccer.Ball = Ball;
 })(Soccer || (Soccer = {}));
 //# sourceMappingURL=Ball.js.map

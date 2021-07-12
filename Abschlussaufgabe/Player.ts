@@ -1,15 +1,15 @@
 namespace Soccer {
 
     export class Player extends Moveable {
-       protected team: number;   
-       protected colorTeam1: string;
-       protected colorTeam2: string;
-       protected position: Vector;
-       protected velocity: Vector;
-       protected precision: number;
-       protected radius: number;
-       protected jerseyNumber: number;
-       protected changePlayer: boolean;
+        public colorTeam1: string;
+        public colorTeam2: string;
+        protected position: Vector;
+        protected velocity: Vector;
+        protected team: number;   
+        protected precision: number;
+        protected radius: number;
+        protected jerseyNumber: number;
+        protected changePlayer: boolean;
 
        constructor(_team?: number, _colorTeam1?: string, _colorTeam2?: string, _precision?: number, _jerseyNumber?: number, _position?: Vector, _velocity?: Vector) {
         super(_position);
@@ -18,8 +18,7 @@ namespace Soccer {
         let a: number = - Math.random(); // Velocity
         let b: number = 2 * Math.random(); // Velocity
         this.position = new Vector(x, y);
-        this.colorTeam1 = "grey";
-        this.colorTeam2 = "purple";
+        
 
         if (_position) 
         this.position = _position;
@@ -32,6 +31,12 @@ namespace Soccer {
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
             crc2.fillStyle = this.colorTeam1;
+            crc2.fill();
+            crc2.closePath();
+
+            crc2.beginPath();
+            crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
+            crc2.fillStyle = this.colorTeam2;
             crc2.fill();
             crc2.closePath();
             }

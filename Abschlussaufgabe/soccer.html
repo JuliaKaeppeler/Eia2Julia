@@ -26,12 +26,12 @@
 
         <fieldset>
             <legend>Jersey -Team 1</legend>
-            <input type="color" name="jerseyColor" value="#ff0000">
+            <input id="jerseyColor1" type="color" name="jerseyColor" value="#ff0000">
         </fieldset>
 
         <fieldset>
             <legend>Jersey -Team 2</legend>
-            <input type="color" name="jerseyColor" value="#00ff00">
+            <input id="jerseyColor2" type="color" name="jerseyColor" value="#00ff00">
         </fieldset>
 
         <fieldset>
@@ -45,7 +45,7 @@
             <p>Max. velocity</p>
             <span>
                 6
-                <input type="range" name="minVelocity" min = 0 max = 10 step=1 value="8">
+                <input type="range" name="maxVelocity" min = 0 max = 10 step=1 value="8">
                 10
             </span>
         </fieldset>
@@ -55,19 +55,19 @@
             <p>Min. precision</p>
             <span>
                 1
-                <input type="range" name="minVelocity" min=0 max=10 step=1 value="2">
+                <input type="range" name="minPrecision" min=0 max=10 step=1 value="2">
                 5
             </span>
             <p>Max. precision</p>
             <span>
                 6
-                <input type="range" name="minVelocity" min=0 max=10 step=1 value="8">
+                <input type="range" name="maxPrecision" min=0 max=10 step=1 value="8">
                 10
             </span>
         </fieldset>
     </form>
 
-    <button>Start</button>
+    <button id ="startButton">Start</button>
 
     </div>
 
