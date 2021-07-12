@@ -1,6 +1,7 @@
 namespace Soccer {
     window.addEventListener ("load", handleLoad);
     export let crc2: CanvasRenderingContext2D;
+    let moveables: Moveable[] = []; 
 
     function handleLoad(_event: Event): void {
         let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
@@ -10,8 +11,39 @@ namespace Soccer {
 
         drawSoccerfield();
         let soccerfield: ImageData = crc2.getImageData(0, 0, 800, 600);
-
+        createBall(1);
+        createReferee(1);
+        createLinesman(2);
+        createPlayer(22);
         window.setInterval(update, 20, soccerfield);
+    }
+
+    function createBall(_ballNumber: number): void {
+        for (let i: number = 0; i < _ballNumber; i++) {
+            let ball: Ball = new Ball();
+            moveables.push(ball);
+        }
+    }
+
+    function createReferee(_refereeNumber: number): void {
+            for (let i: number = 0; i < _refereeNumber; i++) {
+                let referee: Referee = new Referee();
+                moveables.push(referee);
+            }
+    }
+
+    function createLinesman(_linesmanNumber: number): void {
+        for (let i: number = 0; i < _linesmanNumber; i++) {
+            let linesman: Linesman = new Linesman();
+            moveables.push(linesman);
+        }
+    }
+
+    function createPlayer(_playerNumber: number): void {
+        for (let i: number = 0; i < _playerNumber; i++) {
+            let player: Player = new Player();
+            moveables.push(player);
+        }
     }
 
     function drawSoccerfield(): void {
@@ -86,7 +118,11 @@ namespace Soccer {
     
 
     function update(_soccerfield: ImageData): void {
-        console.log("update");
+        crc2.putImageData(_soccerfield, 0, 0);
+        for (let moveable of moveables) {
+            moveable.draw();
+            moveable.move(1);
+            }
     }
 
-}
+    }

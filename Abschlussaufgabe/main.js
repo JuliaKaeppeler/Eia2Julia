@@ -1,6 +1,7 @@
 var Soccer;
 (function (Soccer) {
     window.addEventListener("load", handleLoad);
+    var moveables = [];
     function handleLoad(_event) {
         var canvas = document.querySelector("canvas");
         if (!canvas)
@@ -8,7 +9,35 @@ var Soccer;
         Soccer.crc2 = canvas.getContext("2d");
         drawSoccerfield();
         var soccerfield = Soccer.crc2.getImageData(0, 0, 800, 600);
+        createBall(1);
+        createReferee(1);
+        createLinesman(2);
+        createPlayer(22);
         window.setInterval(update, 20, soccerfield);
+    }
+    function createBall(_ballNumber) {
+        for (var i = 0; i < _ballNumber; i++) {
+            var ball = new Soccer.Ball();
+            moveables.push(ball);
+        }
+    }
+    function createReferee(_refereeNumber) {
+        for (var i = 0; i < _refereeNumber; i++) {
+            var referee = new Soccer.Referee();
+            moveables.push(referee);
+        }
+    }
+    function createLinesman(_linesmanNumber) {
+        for (var i = 0; i < _linesmanNumber; i++) {
+            var linesman = new Soccer.Linesman();
+            moveables.push(linesman);
+        }
+    }
+    function createPlayer(_playerNumber) {
+        for (var i = 0; i < _playerNumber; i++) {
+            var player = new Soccer.Player();
+            moveables.push(player);
+        }
     }
     function drawSoccerfield() {
         // Gras
@@ -78,7 +107,12 @@ var Soccer;
         Soccer.crc2.closePath();
     }
     function update(_soccerfield) {
-        console.log("update");
+        Soccer.crc2.putImageData(_soccerfield, 0, 0);
+        for (var _i = 0, moveables_1 = moveables; _i < moveables_1.length; _i++) {
+            var moveable = moveables_1[_i];
+            moveable.draw();
+            moveable.move(1);
+        }
     }
 })(Soccer || (Soccer = {}));
 //# sourceMappingURL=main.js.map
