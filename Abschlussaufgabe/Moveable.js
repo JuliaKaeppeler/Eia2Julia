@@ -2,8 +2,7 @@
 var Soccer;
 (function (Soccer) {
     class Moveable {
-        constructor(_position) {
-            //Velocity?
+        constructor(_position, _fixPosition) {
             let x = 800 * Math.random();
             let y = 600 * Math.random();
             this.position = new Soccer.Vector(x, y);
@@ -20,6 +19,9 @@ var Soccer;
         }
         draw() {
             // Test
+        }
+        moveToBall(_positionBall) {
+            //
         }
     }
     Soccer.Moveable = Moveable;
