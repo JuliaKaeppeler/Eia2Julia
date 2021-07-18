@@ -1,11 +1,13 @@
-/* body {
-    background-image: url("bilder/arena.jpg");
-    background-size:cover;
-} */
+body {
+    /* background-image: url("bilder/arena.jpg");
+    background-size:cover; */
+    background-color: black;
+}
 
 h1 {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
+    color: white;
 }
 
 p {
@@ -15,6 +17,36 @@ p {
 legend {
     font-family: 'Montserrat', sans-serif;
     text-align:center;
+}
+
+fieldset {
+    text-align: center;
+    color: white;
+    margin-bottom: 8px;
+    border-color: white;
+    border-radius: 10px;
+}
+
+.reference {
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    margin:auto;
+    margin-top: 5px;
+    border-radius: 10px;
+    
+}
+
+
+/* .test {
+    color: khaki;
+    
+} */
+
+.hallo {
+    background-color: red;
 }
 
 #startButton {
@@ -27,33 +59,56 @@ legend {
     padding-top: 5px;
     padding-bottom: 5px;
     opacity: 0.6;
+    background-color: green;
+    border-color: white;
+    color: white;
+    border-radius: 10px;
+    border-style:solid;
 }
 
 #startButton:hover {
     opacity: 1;
     transition-duration: 0.4s;
+    color: green;
+    background-color: white;
+    /* font-size: 15px; */
   }
 
-
-
 #formular {
-    width: 20%;
+    width: 15%;
     float: left;
-    margin-left: 5%;
-    margin-top: 2%;
-    
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: green;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
 }
 
 #soccerfield {
-    float: right;
+    /* float: right;
     margin-right: 10%;
-    margin-top: 2%;
+    margin-top: 2%; */
+    justify-content: center;
+    
 }
 
-.score {
+#display {
     text-align: center;
+    float: right;
+    background-color: green;
+    color: white;
+    padding-top: 10px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    margin-right: 2%;
 }
 
 canvas {
     border-radius: 10px;
+    
 }

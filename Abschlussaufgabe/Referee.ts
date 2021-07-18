@@ -2,11 +2,10 @@ namespace Soccer {
 
     export class Referee extends Moveable {
        protected color: string;   
-       //protected position: Vector;
        protected velocity: Vector;
 
-       constructor(_position?: Vector) {
-        super(_position);
+       constructor(_position?: Vector) { // Übernimmt position von Moveable
+        super(_position); // Übernimmt aus Superklasse
         let x: number = 800 * Math.random();
         let y: number = 500 * Math.random();
         let a: number = - Math.random(); // Velocity

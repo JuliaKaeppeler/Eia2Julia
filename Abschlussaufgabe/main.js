@@ -15,25 +15,27 @@ var Soccer;
     let startButton;
     let ball;
     let time = false; // timeOut
+    let playerStats;
     Soccer.activityPlayer = Activity.FOLLOW_BALL;
     function handleLoad(_event) {
-        // let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
         let canvas = document.querySelector("canvas");
         if (!canvas)
             return;
         Soccer.crc2 = canvas.getContext("2d");
-        drawSoccerfield();
-        let soccerfield = Soccer.crc2.getImageData(0, 0, 800, 600);
-        //createBall(1);
-        ball = new Soccer.Ball(); // Ball generieren
-        moveables.push(ball);
-        createReferee(1);
-        createLinesman(1);
+        drawSoccerfield(); // Hintergrund wird aufgerufen
+        let soccerfield = Soccer.crc2.getImageData(0, 0, 800, 600); // Hintergrund wird als Bild implementiert
+        ball = new Soccer.Ball(); // Ball erzeugen
+        moveables.push(ball); // ball wird in Array moveables gepusht
+        createReferee(1); // 1 Schiedsrichter wird aufgerufen
+        createLinesman(1); // Hier 1, weil in der Funktion schon 2 Lienienrichter erstellt werden. 
         form = document.querySelector("form");
         form.addEventListener("change", handleChange);
         startButton = document.querySelector("#startButton");
-        startButton.addEventListener("click", createPlayer); // createPlayer wird aufgerufe
+        startButton.addEventListener("click", createPlayer); // createPlayer wird aufgerufen
+        playerStats = document.getElementById("playerStats");
+        playerStats?.addEventListener("change", showPlayerStats);
         canvas.addEventListener("click", getPositionClick);
+        window.addEventListener("keydown", playSound);
         window.setInterval(update, 25, soccerfield);
     }
     function handleChange(_event) {
@@ -49,22 +51,26 @@ var Soccer;
         ball.target = position;
         Soccer.activityPlayer = Activity.FLY_BALL;
     }
+    function playSound(_event) {
+        let audio = new Audio("cant_stop_smilin.mp3");
+        audio.play();
+    }
     function createReferee(_refereeNumber) {
-        for (let i = 0; i < _refereeNumber; i++) {
+        for (let i = 0; i < _refereeNumber; i++) { //Variable i wird immer um 1 erhöht, solange i kleiner ist als Variable refereeNumber. 
             let referee = new Soccer.Referee();
             moveables.push(referee);
         }
     }
     function createLinesman(_linesmanNumber) {
-        for (let i = 0; i < _linesmanNumber; i++) {
-            let linesman1 = new Soccer.Linesman();
+        for (let i = 0; i < _linesmanNumber; i++) { // for-Schleife erstellt Linienrichter. i++ (um ein Linienrichter erhöhen bzw.linesmanNumber um eins erhöhen.) 
+            let linesman1 = new Soccer.Linesman(); // erstellt ersten Linienrichter
             linesman1.position.x = 800 * Math.random(); // setzt position.x von Linesman
-            linesman1.position.y = 20;
-            linesman1.velocity.x = Math.random();
-            linesman1.velocity.y = 0;
+            linesman1.position.y = 20; // setzt position.y von Linesman
+            linesman1.velocity.x = Math.random(); // setzt velocity.x von Linesman auf Random
+            linesman1.velocity.y = 0; // setzt velocity.y von Linesman auf 0, damit er nur horizontal läuft
             moveables.push(linesman1); //Werte des ersten Linienrichters in das Array pushen
-            let linesman2 = new Soccer.Linesman();
-            moveables.push(linesman2);
+            let linesman2 = new Soccer.Linesman(); // erstellt zweiten Linienrichter
+            moveables.push(linesman2); // Werte des zweiten Linienrichters in das Array pushen
         }
     }
     function createPlayer() {
@@ -80,7 +86,7 @@ var Soccer;
                 player1Team1.fixPosition.x = 60;
                 player1Team1.fixPosition.y = 230;
                 player1Team1.jerseyNum = "1";
-                player1Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player1Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player1Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player1Team1);
             }
@@ -93,7 +99,7 @@ var Soccer;
                 player2Team1.fixPosition.x = 60;
                 player2Team1.fixPosition.y = 380;
                 player2Team1.jerseyNum = "2";
-                player2Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player2Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player2Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player2Team1);
             }
@@ -106,7 +112,7 @@ var Soccer;
                 player3Team1.fixPosition.x = 240;
                 player3Team1.fixPosition.y = 100;
                 player3Team1.jerseyNum = "3";
-                player3Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player3Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player3Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player3Team1);
             }
@@ -119,7 +125,7 @@ var Soccer;
                 player4Team1.fixPosition.x = 240;
                 player4Team1.fixPosition.y = 500;
                 player4Team1.jerseyNum = "4";
-                player4Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player4Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player4Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player4Team1);
             }
@@ -132,7 +138,7 @@ var Soccer;
                 player5Team1.fixPosition.x = 400;
                 player5Team1.fixPosition.y = 230;
                 player5Team1.jerseyNum = "5";
-                player5Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player5Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player5Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player5Team1);
             }
@@ -145,7 +151,7 @@ var Soccer;
                 player6Team1.fixPosition.x = 400;
                 player6Team1.fixPosition.y = 530;
                 player6Team1.jerseyNum = "6";
-                player6Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player6Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player6Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player6Team1);
             }
@@ -158,7 +164,7 @@ var Soccer;
                 player7Team1.fixPosition.x = 560;
                 player7Team1.fixPosition.y = 200;
                 player7Team1.jerseyNum = "7";
-                player7Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player7Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player7Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player7Team1);
             }
@@ -171,7 +177,7 @@ var Soccer;
                 player8Team1.fixPosition.x = 560;
                 player8Team1.fixPosition.y = 300;
                 player8Team1.jerseyNum = "8";
-                player8Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player8Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player8Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player8Team1);
             }
@@ -184,7 +190,7 @@ var Soccer;
                 player9Team1.fixPosition.x = 560;
                 player9Team1.fixPosition.y = 400;
                 player9Team1.jerseyNum = "9";
-                player9Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player9Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player9Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player9Team1);
             }
@@ -197,7 +203,7 @@ var Soccer;
                 player10Team1.fixPosition.x = 740;
                 player10Team1.fixPosition.y = 80;
                 player10Team1.jerseyNum = "10";
-                player10Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player10Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player10Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player10Team1);
             }
@@ -210,7 +216,7 @@ var Soccer;
                 player11Team1.fixPosition.x = 740;
                 player11Team1.fixPosition.y = 530;
                 player11Team1.jerseyNum = "11";
-                player11Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player11Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player11Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player11Team1);
             }
@@ -223,7 +229,7 @@ var Soccer;
                 player1Team2.fixPosition.x = 60;
                 player1Team2.fixPosition.y = 80;
                 player1Team2.jerseyNum = "12";
-                player1Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player1Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player1Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player1Team2);
             }
@@ -236,7 +242,7 @@ var Soccer;
                 player2Team2.fixPosition.x = 60;
                 player2Team2.fixPosition.y = 530;
                 player2Team2.jerseyNum = "13";
-                player2Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player2Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player2Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player2Team2);
             }
@@ -249,7 +255,7 @@ var Soccer;
                 player3Team2.fixPosition.x = 240;
                 player3Team2.fixPosition.y = 200;
                 player3Team2.jerseyNum = "14";
-                player3Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player3Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player3Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player3Team2);
             }
@@ -262,7 +268,7 @@ var Soccer;
                 player4Team2.fixPosition.x = 240;
                 player4Team2.fixPosition.y = 300;
                 player4Team2.jerseyNum = "15";
-                player4Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player4Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player4Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player4Team2);
             }
@@ -275,7 +281,7 @@ var Soccer;
                 player5Team2.fixPosition.x = 250;
                 player5Team2.fixPosition.y = 400;
                 player5Team2.jerseyNum = "16";
-                player5Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player5Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player5Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player5Team2);
             }
@@ -288,7 +294,7 @@ var Soccer;
                 player6Team2.fixPosition.x = 400;
                 player6Team2.fixPosition.y = 80;
                 player6Team2.jerseyNum = "17";
-                player6Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player6Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player6Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player6Team2);
             }
@@ -301,7 +307,7 @@ var Soccer;
                 player7Team2.fixPosition.x = 400;
                 player7Team2.fixPosition.y = 380;
                 player7Team2.jerseyNum = "18";
-                player7Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player7Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player7Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player7Team2);
             }
@@ -314,7 +320,7 @@ var Soccer;
                 player8Team2.fixPosition.x = 560;
                 player8Team2.fixPosition.y = 100;
                 player8Team2.jerseyNum = "19";
-                player8Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player8Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player8Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player8Team2);
             }
@@ -327,7 +333,7 @@ var Soccer;
                 player9Team2.fixPosition.x = 560;
                 player9Team2.fixPosition.y = 500;
                 player9Team2.jerseyNum = "20";
-                player9Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player9Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player9Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player9Team2);
             }
@@ -340,7 +346,7 @@ var Soccer;
                 player10Team2.fixPosition.x = 740;
                 player10Team2.fixPosition.y = 230;
                 player10Team2.jerseyNum = "21";
-                player10Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player10Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player10Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player10Team2);
             }
@@ -353,11 +359,55 @@ var Soccer;
                 player11Team2.fixPosition.x = 740;
                 player11Team2.fixPosition.y = 380;
                 player11Team2.jerseyNum = "22";
-                player11Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+                player11Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player11Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
                 moveables.push(player11Team2);
             }
         }
+        let form = document.createElement("form");
+        document.body.appendChild(form);
+        let fieldset = document.createElement("fieldset");
+        form.appendChild(fieldset);
+        let legend = document.createElement("legend");
+        legend.innerHTML = "Team 1";
+        fieldset.appendChild(legend);
+        let selectPlayerTeam1 = document.createElement("select");
+        selectPlayerTeam1.addEventListener("change", showPlayerStats);
+        fieldset.appendChild(selectPlayerTeam1);
+        for (let i = 1; i < 12; i++) {
+            let option = document.createElement("option");
+            option.text = "Player " + i;
+            selectPlayerTeam1.add(option);
+        }
+        let form2 = document.createElement("form");
+        form2.classList.add("hallo");
+        document.body.appendChild(form2);
+        let fieldset2 = document.createElement("fieldset");
+        form.appendChild(fieldset2);
+        let legend2 = document.createElement("legend");
+        legend2.innerHTML = "Team 2";
+        fieldset2.appendChild(legend2);
+        let selectPlayerTeam2 = document.createElement("select");
+        selectPlayerTeam2.addEventListener("change", showPlayerStats);
+        selectPlayerTeam2.classList.add("test");
+        fieldset2.appendChild(selectPlayerTeam2);
+        for (let i = 12; i < 23; i++) {
+            let option = document.createElement("option");
+            option.text = "Player " + i;
+            selectPlayerTeam2.add(option);
+        }
+        let div = document.createElement("div");
+        //div.innerHTML = "Test";
+        div.setAttribute("class", "reference");
+        document.body.appendChild(div);
+        div.appendChild(form);
+    }
+    function showPlayerStats() {
+        let div = document.createElement("div"); // 
+        div.innerHTML = "PLAYER STATS";
+        document.body.appendChild(div);
+        // let select: HTMLElement = document.querySelector("select");
+        // select.value 
     }
     function getRandomVelocity(_min, _max) {
         let velocity = _max - _min;

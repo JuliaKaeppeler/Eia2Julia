@@ -3,7 +3,7 @@ var Soccer;
 (function (Soccer) {
     class Referee extends Soccer.Moveable {
         constructor(_position) {
-            super(_position);
+            super(_position); // Übernimmt aus Superklasse
             let x = 800 * Math.random();
             let y = 500 * Math.random();
             let a = -Math.random(); // Velocity

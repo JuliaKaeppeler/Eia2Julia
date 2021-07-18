@@ -23,15 +23,14 @@
     <div id="formular">
 
     <form>
-
         <fieldset>
             <legend>Jersey -Team 1</legend>
-            <input id="jerseyColor1" type="color" name="jerseyColor" value="#ff0000">
+            <input id="jerseyColor1" type="color" name="jerseyColor" value="#8a97ff">
         </fieldset>
 
         <fieldset>
             <legend>Jersey -Team 2</legend>
-            <input id="jerseyColor2" type="color" name="jerseyColor" value="#00ff00">
+            <input id="jerseyColor2" type="color" name="jerseyColor" value="#ffa1c3">
         </fieldset>
 
         <fieldset>
@@ -68,15 +67,19 @@
     </form>
 
     <button id ="startButton">Start game</button>
-
     </div>
 
     <div id="soccerfield">
-    <canvas width="800" height="600"></canvas>
-    <p class="score">Score</p>
-    <p class="score">Possession</p>
-    </div>
-    
+        	<div class ="reference">
+            </div>
 
+
+        <canvas width="800" height="600"></canvas>
+        <div id ="display">
+            <p>Score <a id ="goalTeam2">0</a> : <a id ="goalTeam1">0</a> </p>
+            <p>On ball <a id ="onBall"></a></p>
+        </div>    
+    </div>  
+    
 </body>
 </html>

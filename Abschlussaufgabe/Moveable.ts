@@ -6,7 +6,7 @@ namespace Soccer {
         protected color: string;   
         protected velocity: Vector;
         
-       constructor(_position?: Vector, _fixPosition?: Vector) {
+        constructor(_position?: Vector, _fixPosition?: Vector) {
         let x: number = 800 * Math.random();
         let y: number = 600 * Math.random();
         this.position = new Vector(x, y);

@@ -15,31 +15,34 @@ namespace Soccer {
     let startButton: HTMLElement;
     let ball: Ball;
     let time: boolean = false; // timeOut
+    let playerStats: HTMLElement;
 
     export let activityPlayer: Activity = Activity.FOLLOW_BALL; 
 
     function handleLoad(_event: Event): void {
-        // let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
         let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.querySelector("canvas");
         if (!canvas)
                  return;
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
 
-        drawSoccerfield();
-        let soccerfield: ImageData = crc2.getImageData(0, 0, 800, 600);
-        //createBall(1);
-        ball = new Ball(); // Ball generieren
-        moveables.push(ball);
-        createReferee(1);
-        createLinesman(1);
+        drawSoccerfield(); // Hintergrund wird aufgerufen
+        let soccerfield: ImageData = crc2.getImageData(0, 0, 800, 600); // Hintergrund wird als Bild implementiert
+        ball = new Ball(); // Ball erzeugen
+        moveables.push(ball); // ball wird in Array moveables gepusht
+        createReferee(1); // 1 Schiedsrichter wird aufgerufen
+        createLinesman(1); // Hier 1, weil in der Funktion schon 2 Lienienrichter erstellt werden. 
 
         form = <HTMLElement>document.querySelector("form");
         form.addEventListener("change", handleChange);
 
         startButton = <HTMLElement>document.querySelector("#startButton");
-        startButton.addEventListener("click", createPlayer); // createPlayer wird aufgerufe
+        startButton.addEventListener("click", createPlayer); // createPlayer wird aufgerufen
+
+        playerStats = <HTMLElement>document.getElementById("playerStats");
+        playerStats?.addEventListener("change", showPlayerStats);
 
         canvas.addEventListener("click", getPositionClick);
+        window.addEventListener("keydown", playSound);
 
         window.setInterval(update, 25, soccerfield);
     }
@@ -61,25 +64,30 @@ namespace Soccer {
     }
 
 
-    function createReferee(_refereeNumber: number): void {
-            for (let i: number = 0; i < _refereeNumber; i++) {
+    function playSound(_event: KeyboardEvent): void {
+        let audio: HTMLAudioElement = new Audio ("cant_stop_smilin.mp3");
+        audio.play();
+    }
+
+    function createReferee(_refereeNumber: number): void { // Übergabeparameter refereeNumber (Der Wert der Variable ist die Anzahl der Schiedsrichter) -> void: kein Rückgabewert
+            for (let i: number = 0; i < _refereeNumber; i++) { //Variable i wird immer um 1 erhöht, solange i kleiner ist als Variable refereeNumber. 
                 let referee: Referee = new Referee();
                 moveables.push(referee);
             }
     }
 
 
-    function createLinesman(_linesmanNumber: number): void {
-        for (let i: number = 0; i < _linesmanNumber; i++) {
-            let linesman1: Linesman = new Linesman();
+    function createLinesman(_linesmanNumber: number): void { // Übergabeparameter linesmanNumber (Der Wert der Variable ist die Anzahl der Linienrichter) -> void: kein Rückgabewert
+        for (let i: number = 0; i < _linesmanNumber; i++) { // for-Schleife erstellt Linienrichter. i++ (um ein Linienrichter erhöhen bzw.linesmanNumber um eins erhöhen.) 
+            let linesman1: Linesman = new Linesman(); // erstellt ersten Linienrichter
             linesman1.position.x = 800 * Math.random(); // setzt position.x von Linesman
-            linesman1.position.y = 20;
-            linesman1.velocity.x = Math.random();
-            linesman1.velocity.y = 0;
+            linesman1.position.y = 20; // setzt position.y von Linesman
+            linesman1.velocity.x = Math.random(); // setzt velocity.x von Linesman auf Random
+            linesman1.velocity.y = 0; // setzt velocity.y von Linesman auf 0, damit er nur horizontal läuft
             moveables.push(linesman1); //Werte des ersten Linienrichters in das Array pushen
 
-            let linesman2: Linesman = new Linesman();
-            moveables.push(linesman2);
+            let linesman2: Linesman = new Linesman(); // erstellt zweiten Linienrichter
+            moveables.push(linesman2); // Werte des zweiten Linienrichters in das Array pushen
         }
     }
 
@@ -98,10 +106,9 @@ namespace Soccer {
             player1Team1.fixPosition.x = 60;
             player1Team1.fixPosition.y = 230;
             player1Team1.jerseyNum = "1";
-            player1Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player1Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player1Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player1Team1);
-            
 
         }
 
@@ -114,7 +121,7 @@ namespace Soccer {
             player2Team1.fixPosition.x = 60;
             player2Team1.fixPosition.y = 380;
             player2Team1.jerseyNum = "2";
-            player2Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player2Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player2Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player2Team1);
         }
@@ -128,7 +135,7 @@ namespace Soccer {
             player3Team1.fixPosition.x = 240;
             player3Team1.fixPosition.y = 100;
             player3Team1.jerseyNum = "3";
-            player3Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player3Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player3Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player3Team1);
         }
@@ -142,7 +149,7 @@ namespace Soccer {
             player4Team1.fixPosition.x = 240;
             player4Team1.fixPosition.y = 500;
             player4Team1.jerseyNum = "4";
-            player4Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player4Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player4Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player4Team1);
         }
@@ -156,7 +163,7 @@ namespace Soccer {
             player5Team1.fixPosition.x = 400;
             player5Team1.fixPosition.y = 230;
             player5Team1.jerseyNum = "5";
-            player5Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player5Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player5Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player5Team1);
         }
@@ -170,7 +177,7 @@ namespace Soccer {
             player6Team1.fixPosition.x = 400;
             player6Team1.fixPosition.y = 530;
             player6Team1.jerseyNum = "6";
-            player6Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player6Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player6Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player6Team1);
         }
@@ -184,7 +191,7 @@ namespace Soccer {
             player7Team1.fixPosition.x = 560;
             player7Team1.fixPosition.y = 200;
             player7Team1.jerseyNum = "7";
-            player7Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player7Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player7Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player7Team1);
         }
@@ -198,7 +205,7 @@ namespace Soccer {
             player8Team1.fixPosition.x = 560;
             player8Team1.fixPosition.y = 300;
             player8Team1.jerseyNum = "8";
-            player8Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player8Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player8Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player8Team1);
         }
@@ -212,7 +219,7 @@ namespace Soccer {
             player9Team1.fixPosition.x = 560;
             player9Team1.fixPosition.y = 400;
             player9Team1.jerseyNum = "9";
-            player9Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player9Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player9Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player9Team1);
         }
@@ -226,7 +233,7 @@ namespace Soccer {
             player10Team1.fixPosition.x = 740;
             player10Team1.fixPosition.y = 80;
             player10Team1.jerseyNum = "10";
-            player10Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player10Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player10Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player10Team1);
         }
@@ -240,7 +247,7 @@ namespace Soccer {
             player11Team1.fixPosition.x = 740;
             player11Team1.fixPosition.y = 530;
             player11Team1.jerseyNum = "11";
-            player11Team1.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player11Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player11Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player11Team1);
         }
@@ -254,7 +261,7 @@ namespace Soccer {
             player1Team2.fixPosition.x = 60;
             player1Team2.fixPosition.y = 80;
             player1Team2.jerseyNum = "12";
-            player1Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player1Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player1Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player1Team2);
         }
@@ -268,7 +275,7 @@ namespace Soccer {
             player2Team2.fixPosition.x = 60;
             player2Team2.fixPosition.y = 530;
             player2Team2.jerseyNum = "13";
-            player2Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player2Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player2Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player2Team2);
         }
@@ -282,7 +289,7 @@ namespace Soccer {
             player3Team2.fixPosition.x = 240;
             player3Team2.fixPosition.y = 200;
             player3Team2.jerseyNum = "14";
-            player3Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player3Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player3Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player3Team2);
         }
@@ -296,7 +303,7 @@ namespace Soccer {
             player4Team2.fixPosition.x = 240;
             player4Team2.fixPosition.y = 300;
             player4Team2.jerseyNum = "15";
-            player4Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player4Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player4Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player4Team2);
         }
@@ -310,7 +317,7 @@ namespace Soccer {
             player5Team2.fixPosition.x = 250;
             player5Team2.fixPosition.y = 400;
             player5Team2.jerseyNum = "16";
-            player5Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player5Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player5Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player5Team2);
         }
@@ -324,7 +331,7 @@ namespace Soccer {
             player6Team2.fixPosition.x = 400;
             player6Team2.fixPosition.y = 80;
             player6Team2.jerseyNum = "17";
-            player6Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player6Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player6Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player6Team2);
         }
@@ -338,7 +345,7 @@ namespace Soccer {
             player7Team2.fixPosition.x = 400;
             player7Team2.fixPosition.y = 380;
             player7Team2.jerseyNum = "18";
-            player7Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player7Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player7Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player7Team2);
         }
@@ -352,7 +359,7 @@ namespace Soccer {
             player8Team2.fixPosition.x = 560;
             player8Team2.fixPosition.y = 100;
             player8Team2.jerseyNum = "19";
-            player8Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player8Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player8Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player8Team2);
         }
@@ -366,7 +373,7 @@ namespace Soccer {
             player9Team2.fixPosition.x = 560;
             player9Team2.fixPosition.y = 500;
             player9Team2.jerseyNum = "20";
-            player9Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player9Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player9Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player9Team2);
         }
@@ -380,7 +387,7 @@ namespace Soccer {
             player10Team2.fixPosition.x = 740;
             player10Team2.fixPosition.y = 230;
             player10Team2.jerseyNum = "21";
-            player10Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player10Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player10Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player10Team2);
         }
@@ -394,12 +401,69 @@ namespace Soccer {
             player11Team2.fixPosition.x = 740;
             player11Team2.fixPosition.y = 380;
             player11Team2.jerseyNum = "22";
-            player11Team2.velocityTwo = getRandomVelocity(Number(player[2]), Number(player[3]));
+            player11Team2.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player11Team2.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
             moveables.push(player11Team2);
         }
     }
+
+
+        let form: HTMLFormElement = document.createElement("form");
+        document.body.appendChild(form);
+        let fieldset: HTMLFieldSetElement = document.createElement("fieldset");
+        form.appendChild(fieldset);
+        let legend: HTMLElement = document.createElement("legend");
+        legend.innerHTML = "Team 1";
+        fieldset.appendChild(legend);
+
+        let selectPlayerTeam1: HTMLSelectElement = document.createElement("select");
+        selectPlayerTeam1.addEventListener("change", showPlayerStats);
+        fieldset.appendChild(selectPlayerTeam1);
+        for (let i: number = 1; i < 12; i++) {
+            let option: HTMLOptionElement = document.createElement("option");
+            option.text = "Player " + i;
+            selectPlayerTeam1.add(option);
+        }
+        
+        let form2: HTMLFormElement = document.createElement("form");
+        form2.classList.add("hallo");
+        document.body.appendChild(form2);
+        let fieldset2: HTMLFieldSetElement = document.createElement("fieldset");
+        form.appendChild(fieldset2);
+        let legend2: HTMLElement = document.createElement("legend");
+        legend2.innerHTML = "Team 2";
+        fieldset2.appendChild(legend2);
+
+        let selectPlayerTeam2: HTMLSelectElement = document.createElement("select");
+        selectPlayerTeam2.addEventListener("change", showPlayerStats);
+        selectPlayerTeam2.classList.add("test");
+        fieldset2.appendChild(selectPlayerTeam2);
+        for (let i: number = 12; i < 23; i++) {
+            let option: HTMLOptionElement = document.createElement("option");
+            option.text = "Player " + i;
+            selectPlayerTeam2.add(option);
+        }
+
+        let div: HTMLDivElement = document.createElement("div");
+        //div.innerHTML = "Test";
+        div.setAttribute("class", "reference");
+        document.body.appendChild(div);
+        div.appendChild(form);
+        
+
+        
 }
+
+    
+    function showPlayerStats(): void {
+        let div: HTMLElement = document.createElement("div"); // 
+        div.innerHTML = "PLAYER STATS";
+        document.body.appendChild(div);
+
+        // let select: HTMLElement = document.querySelector("select");
+        // select.value 
+    }
+
 
     function getRandomVelocity(_min: number, _max: number): number {
         let velocity: number = _max - _min;

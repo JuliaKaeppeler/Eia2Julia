@@ -7,9 +7,10 @@ namespace Soccer {
         public colorTeam1: string;
         public colorTeam2: string;
         public position: Vector;
+        public onBallPlayer: HTMLElement;
         declare public fixPosition: Vector;
         public velocity: Vector;
-        public velocityTwo: number;
+        public velocityPlayer: number;
         protected angle: number;
         protected team: number;   
         protected changePlayer: boolean;
@@ -33,21 +34,22 @@ namespace Soccer {
         }
 
         public draw(): void { 
+            // Team 1
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
             crc2.fillStyle = this.colorTeam1;
             crc2.fill();
-            crc2.strokeText(this.jerseyNum, this.position.x, this.position.y, 8);
+            crc2.strokeText(this.jerseyNum, this.position.x, this.position.y + 4, 8);
             crc2.strokeStyle = "black";
             crc2.textAlign = "center"; 
             crc2.stroke();
             crc2.closePath();
-
+            // Team 2
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
             crc2.fillStyle = this.colorTeam2;
             crc2.fill();
-            crc2.strokeText(this.jerseyNum, this.position.x, this.position.y, 70);
+            crc2.strokeText(this.jerseyNum, this.position.x, this.position.y + 4, 8);
             crc2.strokeStyle = "black";
             crc2.stroke();
             crc2.closePath();
@@ -82,10 +84,12 @@ namespace Soccer {
             if (radius <= 130) {
                
                 let position: Vector = new Vector(xPos, yPos);            
-                position.scale(this.velocityTwo / radius);
+                position.scale(this.velocityPlayer / radius);
                 this.position.add(position);
 
                 if (radius <= 5) {
+                    this.onBallPlayer = <HTMLElement>document.querySelector("#onBall");
+                    this.onBallPlayer.innerHTML = this.jerseyNum;
                     activityPlayer = Activity.BREAK_GAME;
                 }    
             } 

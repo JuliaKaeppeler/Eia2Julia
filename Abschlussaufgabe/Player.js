@@ -17,20 +17,22 @@ var Soccer;
             this.velocity = new Soccer.Vector(a, b);
         }
         draw() {
+            // Team 1
             Soccer.crc2.beginPath();
             Soccer.crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
             Soccer.crc2.fillStyle = this.colorTeam1;
             Soccer.crc2.fill();
-            Soccer.crc2.strokeText(this.jerseyNum, this.position.x, this.position.y, 8);
+            Soccer.crc2.strokeText(this.jerseyNum, this.position.x, this.position.y + 4, 8);
             Soccer.crc2.strokeStyle = "black";
             Soccer.crc2.textAlign = "center";
             Soccer.crc2.stroke();
             Soccer.crc2.closePath();
+            // Team 2
             Soccer.crc2.beginPath();
             Soccer.crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
             Soccer.crc2.fillStyle = this.colorTeam2;
             Soccer.crc2.fill();
-            Soccer.crc2.strokeText(this.jerseyNum, this.position.x, this.position.y, 70);
+            Soccer.crc2.strokeText(this.jerseyNum, this.position.x, this.position.y + 4, 8);
             Soccer.crc2.strokeStyle = "black";
             Soccer.crc2.stroke();
             Soccer.crc2.closePath();
@@ -60,9 +62,11 @@ var Soccer;
             let radius = Math.hypot(yPos, xPos);
             if (radius <= 130) {
                 let position = new Soccer.Vector(xPos, yPos);
-                position.scale(this.velocityTwo / radius);
+                position.scale(this.velocityPlayer / radius);
                 this.position.add(position);
                 if (radius <= 5) {
+                    this.onBallPlayer = document.querySelector("#onBall");
+                    this.onBallPlayer.innerHTML = this.jerseyNum;
                     Soccer.activityPlayer = Soccer.Activity.BREAK_GAME;
                 }
             }
