@@ -61,18 +61,17 @@ namespace Soccer {
             // crc2.closePath();
             }
 
-        public move(_timeslice: number): void {
-            //Kollision
-            if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
-            this.velocity.x = -this.velocity.x;
-            }
-            if (this.position.y + 10 > 600 || this.position.y - 5 < 0) {
-            this.velocity.y = -this.velocity.y;
-            }
-        }
+        // public move(_timeslice: number): void {
+        //     //Kollision
+        //     if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
+        //     this.velocity.x = -this.velocity.x;
+        //     }
+        //     if (this.position.y + 10 > 600 || this.position.y - 5 < 0) {
+        //     this.velocity.y = -this.velocity.y;
+        //     }
+        // }
         
-        public moveToBall(_positionBall: Vector): void {
-            console.log(this);
+        public moveToBall(_positionBall: Vector): void { 
             let positionBall: Vector = _positionBall;
             //Abstand Ball und Spieler D=(P2-P1)
             let xPos: number = positionBall.x - this.position.x;

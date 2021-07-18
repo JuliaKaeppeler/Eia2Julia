@@ -570,6 +570,7 @@ namespace Soccer {
                 for (let moveable of moveables) {
                     moveable.move(1 / 15);
                     moveable.moveToBall(positionBall);
+
                    }        
                 break;
             case Activity.BREAK_GAME:

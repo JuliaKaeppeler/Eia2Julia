@@ -6,7 +6,6 @@ namespace Soccer {
         public goalRight: HTMLElement;
         public goal1: number = 0;
         public goal2: number = 0;
-        //public position: Vector;
         protected color: string;
         protected velocity: Vector;
         private startPosition: Vector;
@@ -40,7 +39,7 @@ namespace Soccer {
             crc2.closePath();
         }
 
-        public move(_timeslice: number): void {
+        public move(_timeslice: number): void { 
             //gate first Team, left
             let posLeftX: number = 0 - this.position.x; //Differenz berechnen von Ball posx und player posx
             let posLeftY: number = 300 - this.position.y; //Differenz berechnen von Ball posy und player posy
