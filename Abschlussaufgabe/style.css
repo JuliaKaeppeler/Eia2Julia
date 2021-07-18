@@ -4,6 +4,7 @@ body {
     background-color: black;
 }
 
+
 h1 {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
@@ -36,7 +37,15 @@ fieldset {
     margin:auto;
     margin-top: 5px;
     border-radius: 10px;
-    
+
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2%;
+    margin-top: 2%;
 }
 
 
@@ -110,5 +119,11 @@ fieldset {
 
 canvas {
     border-radius: 10px;
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
     
 }
