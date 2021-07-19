@@ -10,7 +10,6 @@ namespace Soccer {
         protected color: string;
         protected velocity: Vector;
         private startPosition: Vector;
-        
 
         constructor(_position?: Vector) {
             super(_position);
@@ -32,6 +31,7 @@ namespace Soccer {
             this.velocity = new Vector(a, b);
         }
 
+        // draw ball
         public draw(): void {
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
@@ -78,12 +78,7 @@ namespace Soccer {
                 activityPlayer = Activity.BREAK_GAME;
                 this.position.set(this.startPosition.x, this.startPosition.y);
                 this.target.set(this.startPosition.x, this.startPosition.y);
-                }
+            }
         }
-
-
     }
-
-
-
 }

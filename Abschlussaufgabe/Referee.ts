@@ -31,19 +31,21 @@ namespace Soccer {
 
 
         public move(_timeslice: number): void {
-            this.position.add(this.velocity);
-            // Kollision x und y
+            this.position.add(this.velocity); // Geschwindigigkeit wird an die Position übergeben.
+            // Kollision auf der x-Achse (horizontal)
+            // Wenn die Position + 10 > 800 auf der x-Achse ist oder die Position - 5 < 0 auf der x-Achse,
+            //, dann soll die Geschwindigkeit auf -this.velocity.x gesetzt werden, 
+            // da sonst der Referee aus dem Canvas gehen würde.
             if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
             this.velocity.x = -this.velocity.x;
             }
+            // Kollision auf der y-Achse (vertical)
+            // Wenn die Position + 10 > 600 auf der y-Achse ist oder die Position - 5 < 0 auf der y-Achse,
+            // dann soll die Geschwindigkeit auf -this.velocity.y gesetzt werden, 
+            // da sonst der Referee aus dem Canvas gehen würde.
             if (this.position.y + 10 > 600 || this.position.y - 5 < 0) {
             this.velocity.y = -this.velocity.y;
             }
         }
-
-
     }
-    
-
-
 }

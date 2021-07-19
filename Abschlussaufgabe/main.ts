@@ -21,6 +21,8 @@ namespace Soccer {
 
     export let activityPlayer: Activity = Activity.FOLLOW_BALL; 
 
+    // CanvasRenderingContext wird generiert
+    // crc2 bei Zeichnungen
     function handleLoad(_event: Event): void {
         let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.querySelector("canvas");
         if (!canvas)
@@ -34,53 +36,59 @@ namespace Soccer {
         createReferee(1); // 1 Schiedsrichter wird aufgerufen
         createLinesman(1); // Hier 1, weil in der Funktion schon 2 Lienienrichter erstellt werden. 
 
-        form = <HTMLElement>document.querySelector("form");
-        form.addEventListener("change", handleChange);
+        form = <HTMLElement>document.querySelector("form"); // form: Veränderung der Werte z.B. Trickot-Farbe verändern.
+        form.addEventListener("change", handleChange); // change listener
 
-        startButton = <HTMLElement>document.querySelector("#startButton");
+        startButton = <HTMLElement>document.querySelector("#startButton"); // Click auf Startbutton
         startButton.addEventListener("click", createPlayer); // createPlayer wird aufgerufen
 
-        canvas.addEventListener("click", getPositionClick);
-        window.addEventListener("keydown", playSound);
+        canvas.addEventListener("click", getPositionClick); // click listener installieren wir auf dem Canvas, damit auf dem ganzen Canvas geklickt werden kann
+        window.addEventListener("keydown", playSound); // keydown listener
 
         window.setInterval(update, 25, soccerfield); // Die Update-Funltion wird alle 25ms. aufgerufen.
 
-        let div: HTMLElement = document.createElement("div"); 
-        div.innerHTML = "Player Stats";
-        div.setAttribute("class", "stats");
-        div.id = "stats";
-        document.body.appendChild(div);
+        let div: HTMLElement = document.createElement("div");  // Div wird erstellt
+        div.innerHTML = "Player Stats"; // Mit innerHTML wird "Player Stats" übergeben
+        div.setAttribute("class", "stats"); // Klasse für das Div erstellen. class="stats"
+        div.id = "stats"; // id wird erstellt. id="stats"
+        document.body.appendChild(div); // Div wird an Body übergeben
     }
 
-    function handleChange(_event: Event): void {
+    // Array wird erstellt mit Name formData
+    // neues FormData wird erstellt (HTML)
+    // entry: jeder Eintrag im Element wird durchgegangen
+    function handleChange(_event: Event): void { 
         _event.preventDefault();
-        let formData: FormData = new FormData(document.forms[0]);
-        player = [];
-        for (let entry of formData.entries()) {
-        player.push(String(entry[1]));
+        let formData: FormData = new FormData(document.forms[0]); //Index ist bei 0, da es das erste Formelement ist
+        player = []; 
+        for (let entry of formData.entries()) { // entry: jeder Eintrag im Element wird durchgegangen 
+        player.push(String(entry[1])); // Alle Werte von player werden in das Form Array gepusht
         } 
     }
 
+    // Click mit der Maus auf bestimmte Position
     function getPositionClick(_event: MouseEvent): void {
         let position: Vector = new Vector(_event.clientX - crc2.canvas.offsetLeft, _event.clientY - crc2.canvas.offsetTop); 
-        ball.target = position; 
+        ball.target = position; // Das Ziel vom Ball ist die Position
         
         activityPlayer = Activity.FLY_BALL;
     }
 
+    // HTMLAudioElement wird erzeugt mir dem Namen des Songs. 
+    //Song wird abgespielt, wenn man auf eine Keyboardtaste drückt.
     function playSound(_event: KeyboardEvent): void {
         let audio: HTMLAudioElement = new Audio ("cant_stop_smilin.mp3");
         audio.play();
     }
 
-    function createReferee(_refereeNumber: number): void { // Übergabeparameter refereeNumber (Der Wert der Variable ist die Anzahl der Schiedsrichter) -> void: kein Rückgabewert
+    function createReferee(_refereeNumber: number): void { // Übergabeparameter refereeNumber (Der Wert der Variable ist die Anzahl der Schiedsrichter) -
             for (let i: number = 0; i < _refereeNumber; i++) { //Variable i wird immer um 1 erhöht, solange i kleiner ist als Variable refereeNumber. 
                 let referee: Referee = new Referee();
                 moveables.push(referee);
             }
     }
 
-    function createLinesman(_linesmanNumber: number): void { // Übergabeparameter linesmanNumber (Der Wert der Variable ist die Anzahl der Linienrichter) -> void: kein Rückgabewert
+    function createLinesman(_linesmanNumber: number): void { // Übergabeparameter linesmanNumber (Der Wert der Variable ist die Anzahl der Linienrichter) 
         for (let i: number = 0; i < _linesmanNumber; i++) { // for-Schleife erstellt Linienrichter. i++ (um ein Linienrichter erhöhen bzw.linesmanNumber um eins erhöhen.) 
             let linesman1: Linesman = new Linesman(); // erstellt ersten Linienrichter
             linesman1.position.x = 800 * Math.random(); // setzt position.x von Linesman
@@ -94,6 +102,7 @@ namespace Soccer {
         }
     }
 
+    // Erstellung der Spieler
     function createPlayer(_event: MouseEvent): void {
         let element: HTMLInputElement = <HTMLInputElement> document.getElementById("startButton");
         element.disabled = true;
@@ -103,14 +112,14 @@ namespace Soccer {
         if (i == 0) {
             let player1Team1: Player = new Player();
             player1Team1.colorTeam1 = player[0];
-            player1Team1.position.x = 60;
-            player1Team1.position.y = 230;
-            player1Team1.fixPosition.x = 60;
-            player1Team1.fixPosition.y = 230;
-            player1Team1.jerseyNum = "1";
+            player1Team1.position.x = 60; // Position auf der x-Achse bei dem sich der Spieler befindet 
+            player1Team1.position.y = 230; // Position auf der y-Achse bei dem sich der Spieler befindet 
+            player1Team1.fixPosition.x = 60; // feste Startposition
+            player1Team1.fixPosition.y = 230; // feste Startposition
+            player1Team1.jerseyNum = "1"; //Trikot-Nummer
             player1Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
             player1Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
-            moveables.push(player1Team1);
+            moveables.push(player1Team1); // Spieler in moveables Array pushen
         }
 
         //Player 2 Team 1
@@ -408,8 +417,8 @@ namespace Soccer {
         }
     }
 
-        let form: HTMLFormElement = document.createElement("form");
-        document.body.appendChild(form);
+        let form: HTMLFormElement = document.createElement("form"); // HTMLFormElement wirdd erstelt
+        document.body.appendChild(form); // und an body übergeben
 
         let fieldset: HTMLFieldSetElement = document.createElement("fieldset");
         form.appendChild(fieldset);
@@ -420,7 +429,7 @@ namespace Soccer {
 
         let selectPlayerTeam1: HTMLSelectElement = document.createElement("select");
         selectPlayerTeam1.setAttribute("id", "selectPlayerTeam1");
-        selectPlayerTeam1.addEventListener("change", showPlayerStats1);
+        selectPlayerTeam1.addEventListener("change", showPlayerStats1); 
         selectPlayerTeam1.name = "team1Selection";
         fieldset.appendChild(selectPlayerTeam1);
         
@@ -533,7 +542,7 @@ namespace Soccer {
 
     }
 
-
+    // Spieler aus Team 1 wird gelöscht
     function deleteTeam1Player(_event: MouseEvent): void {
         for (let b: number = 0; b < moveables.length; b++) {
             let player1: Moveable = moveables[b];
@@ -546,6 +555,7 @@ namespace Soccer {
         }
     }
 
+    //Spieler aus Team zwei wird gelöscht
     function deleteTeam2Player(_event: MouseEvent): void {
         for (let b: number = 0; b < moveables.length; b++) {
             let player2: Moveable = moveables[b];
@@ -558,6 +568,7 @@ namespace Soccer {
         }
     }
 
+    //Berechnung der random Velocity
     function getRandomVelocity(_min: number, _max: number): number {
         let velocity: number = _max - _min;
         let random: number = Math.random();
@@ -567,6 +578,7 @@ namespace Soccer {
         return answer;
     }
 
+    // Berechnung der random Präzision
     function getRandomPrecision(_min: number, _max: number): number {
         let precision: number = _max - _min;
         let random: number = Math.random();
@@ -625,7 +637,6 @@ namespace Soccer {
         crc2.strokeStyle = "white";
         crc2.stroke();
         crc2.closePath();
-
         // goal area left
         crc2.beginPath();
         crc2.moveTo(0, crc2.canvas.height / 2 - 50);
@@ -672,7 +683,7 @@ namespace Soccer {
             case Activity.FLY_BALL: // wenn Spieler sich beim Ball befindet, dann rufen wir FLY_BALL auf. 
                 if (time == false) { // Wenn time(false) == false
                 setTimeout(timeOut, 500); // Damit der Spieler nicht direkt zum Ball rennt, artet er 500 ms. // Nach 500ms wird timeOut aufgerufen
-                time = true; //
+                time = true; 
             }
                 ball.move(1 / 25);
         }

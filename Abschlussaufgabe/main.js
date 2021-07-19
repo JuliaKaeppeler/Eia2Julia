@@ -18,6 +18,8 @@ var Soccer;
     let ball;
     let time = false; // timeOut
     Soccer.activityPlayer = Activity.FOLLOW_BALL;
+    // CanvasRenderingContext wird generiert
+    // crc2 bei Zeichnungen
     function handleLoad(_event) {
         let canvas = document.querySelector("canvas");
         if (!canvas)
@@ -29,32 +31,38 @@ var Soccer;
         moveables.push(ball); // ball wird in Array moveables gepusht
         createReferee(1); // 1 Schiedsrichter wird aufgerufen
         createLinesman(1); // Hier 1, weil in der Funktion schon 2 Lienienrichter erstellt werden. 
-        form = document.querySelector("form");
-        form.addEventListener("change", handleChange);
-        startButton = document.querySelector("#startButton");
+        form = document.querySelector("form"); // form: Veränderung der Werte z.B. Trickot-Farbe verändern.
+        form.addEventListener("change", handleChange); // change listener
+        startButton = document.querySelector("#startButton"); // Click auf Startbutton
         startButton.addEventListener("click", createPlayer); // createPlayer wird aufgerufen
-        canvas.addEventListener("click", getPositionClick);
-        window.addEventListener("keydown", playSound);
+        canvas.addEventListener("click", getPositionClick); // click listener installieren wir auf dem Canvas, damit auf dem ganzen Canvas geklickt werden kann
+        window.addEventListener("keydown", playSound); // keydown listener
         window.setInterval(update, 25, soccerfield); // Die Update-Funltion wird alle 25ms. aufgerufen.
-        let div = document.createElement("div");
-        div.innerHTML = "Player Stats";
-        div.setAttribute("class", "stats");
-        div.id = "stats";
-        document.body.appendChild(div);
+        let div = document.createElement("div"); // Div wird erstellt
+        div.innerHTML = "Player Stats"; // Mit innerHTML wird "Player Stats" übergeben
+        div.setAttribute("class", "stats"); // Klasse für das Div erstellen. class="stats"
+        div.id = "stats"; // id wird erstellt. id="stats"
+        document.body.appendChild(div); // Div wird an Body übergeben
     }
+    // Array wird erstellt mit Name formData
+    // neues FormData wird erstellt (HTML)
+    // entry: jeder Eintrag im Element wird durchgegangen
     function handleChange(_event) {
         _event.preventDefault();
-        let formData = new FormData(document.forms[0]);
+        let formData = new FormData(document.forms[0]); //Index ist bei 0, da es das erste Formelement ist
         player = [];
-        for (let entry of formData.entries()) {
-            player.push(String(entry[1]));
+        for (let entry of formData.entries()) { // entry: jeder Eintrag im Element wird durchgegangen 
+            player.push(String(entry[1])); // Alle Werte von player werden in das Form Array gepusht
         }
     }
+    // Click mit der Maus auf bestimmte Position
     function getPositionClick(_event) {
         let position = new Soccer.Vector(_event.clientX - Soccer.crc2.canvas.offsetLeft, _event.clientY - Soccer.crc2.canvas.offsetTop);
-        ball.target = position;
+        ball.target = position; // Das Ziel vom Ball ist die Position
         Soccer.activityPlayer = Activity.FLY_BALL;
     }
+    // HTMLAudioElement wird erzeugt mir dem Namen des Songs. 
+    //Song wird abgespielt, wenn man auf eine Keyboardtaste drückt.
     function playSound(_event) {
         let audio = new Audio("cant_stop_smilin.mp3");
         audio.play();
@@ -77,6 +85,7 @@ var Soccer;
             moveables.push(linesman2); // Werte des zweiten Linienrichters in das Array pushen
         }
     }
+    // Erstellung der Spieler
     function createPlayer(_event) {
         let element = document.getElementById("startButton");
         element.disabled = true;
@@ -85,14 +94,14 @@ var Soccer;
             if (i == 0) {
                 let player1Team1 = new Soccer.Player();
                 player1Team1.colorTeam1 = player[0];
-                player1Team1.position.x = 60;
-                player1Team1.position.y = 230;
-                player1Team1.fixPosition.x = 60;
-                player1Team1.fixPosition.y = 230;
-                player1Team1.jerseyNum = "1";
+                player1Team1.position.x = 60; // Position auf der x-Achse bei dem sich der Spieler befindet 
+                player1Team1.position.y = 230; // Position auf der y-Achse bei dem sich der Spieler befindet 
+                player1Team1.fixPosition.x = 60; // feste Startposition
+                player1Team1.fixPosition.y = 230; // feste Startposition
+                player1Team1.jerseyNum = "1"; //Trikot-Nummer
                 player1Team1.velocityPlayer = getRandomVelocity(Number(player[2]), Number(player[3]));
                 player1Team1.precision = getRandomPrecision(Number(player[4]), Number(player[5]));
-                moveables.push(player1Team1);
+                moveables.push(player1Team1); // Spieler in moveables Array pushen
             }
             //Player 2 Team 1
             if (i == 1) {
@@ -368,8 +377,8 @@ var Soccer;
                 moveables.push(player11Team2);
             }
         }
-        let form = document.createElement("form");
-        document.body.appendChild(form);
+        let form = document.createElement("form"); // HTMLFormElement wirdd erstelt
+        document.body.appendChild(form); // und an body übergeben
         let fieldset = document.createElement("fieldset");
         form.appendChild(fieldset);
         let legend = document.createElement("legend");
@@ -466,6 +475,7 @@ var Soccer;
         div.appendChild(buttonDeleteTeam2);
         buttonDeleteTeam2.addEventListener("click", deleteTeam2Player);
     }
+    // Spieler aus Team 1 wird gelöscht
     function deleteTeam1Player(_event) {
         for (let b = 0; b < moveables.length; b++) {
             let player1 = moveables[b];
@@ -477,6 +487,7 @@ var Soccer;
             }
         }
     }
+    //Spieler aus Team zwei wird gelöscht
     function deleteTeam2Player(_event) {
         for (let b = 0; b < moveables.length; b++) {
             let player2 = moveables[b];
@@ -488,6 +499,7 @@ var Soccer;
             }
         }
     }
+    //Berechnung der random Velocity
     function getRandomVelocity(_min, _max) {
         let velocity = _max - _min;
         let random = Math.random();
@@ -496,6 +508,7 @@ var Soccer;
         let answer = floored + _min;
         return answer;
     }
+    // Berechnung der random Präzision
     function getRandomPrecision(_min, _max) {
         let precision = _max - _min;
         let random = Math.random();
@@ -595,7 +608,7 @@ var Soccer;
             case Activity.FLY_BALL: // wenn Spieler sich beim Ball befindet, dann rufen wir FLY_BALL auf. 
                 if (time == false) { // Wenn time(false) == false
                     setTimeout(timeOut, 500); // Damit der Spieler nicht direkt zum Ball rennt, artet er 500 ms. // Nach 500ms wird timeOut aufgerufen
-                    time = true; //
+                    time = true;
                 }
                 ball.move(1 / 25);
         }

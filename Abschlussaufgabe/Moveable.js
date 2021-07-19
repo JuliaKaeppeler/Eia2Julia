@@ -11,19 +11,26 @@ var Soccer;
         //Kollision
         move(_timeslice) {
             this.position.add(this.velocity);
-            //mit Kollision
+            // Kollision auf der x-Achse (horizontal)
+            // Wenn die Position + 10 > 800 auf der x-Achse ist oder die Position - 5 < 0 auf der x-Achse,
+            // dann soll die Geschwindigkeit auf -this.velocity.x gesetzt werden, 
+            // da sonst die moveables aus dem Canvas gehen würde.
             if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
                 this.velocity.x = -this.velocity.x;
             }
+            // Kollision auf der y-Achse (vertical)
+            // Wenn die Position + 10 > 600 auf der y-Achse ist oder die Position - 5 < 0 auf der y-Achse,
+            // dann soll die Geschwindigkeit auf -this.velocity.y gesetzt werden, 
+            // da sonst die moveables aus dem Canvas gehen würde.
             if (this.position.y + 10 > 600 || this.position.y - 5 < 0) {
                 this.velocity.y = -this.velocity.y;
             }
         }
         draw() {
-            // Test
+            // draw all moveables
         }
         moveToBall(_positionBall) {
-            //
+            // moveToBall
         }
     }
     Soccer.Moveable = Moveable;

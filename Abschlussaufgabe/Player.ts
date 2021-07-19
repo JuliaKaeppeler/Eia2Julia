@@ -29,13 +29,13 @@ namespace Soccer {
         if (_position) 
         this.position = _position;
         else
-        this.position = new Vector(x, y);
-        this.velocity = new Vector(a, b);
+        this.position = new Vector(x, y); // wird zu neuem Vector
+        this.velocity = new Vector(a, b); // wird zu neuem Vector
     
         }
 
         public draw(): void { 
-            // Team 1
+            // Team 1: Spieler werden gezeichnet
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
             crc2.fillStyle = this.colorTeam1;
@@ -45,7 +45,7 @@ namespace Soccer {
             crc2.textAlign = "center"; 
             crc2.stroke();
             crc2.closePath();
-            // Team 2
+            // Team 2: Spieler werden gezeichnet
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
             crc2.fillStyle = this.colorTeam2;
@@ -67,18 +67,22 @@ namespace Soccer {
             let yDefaultPos: number = this.fixPosition.y;
             let radius: number = Math.hypot(yPos, xPos);
 
-            if (radius <= 130) {
-               
-                let position: Vector = new Vector(xPos, yPos);            
-                position.scale(this.velocityPlayer / radius);
-                this.position.add(position);
+            // Wenn der Radius <= 130 dann bewegt der Spieler sich zum Ball
+            if (radius <= 130) { 
+               // Berechnung Abstand zwischen Spieler und Ball
+                let position: Vector = new Vector(xPos, yPos); // neuer Vector      
+                position.scale(this.velocityPlayer / radius); // Spieler bewegt sich mit seiner Geschwindigkeit
+                this.position.add(position); // neue Position wird übergeben
 
+                // Wenn Radius <= 5, dann nimmt Spieler den Ball an. Die Trikotnummer wird mit innerHTML übergeben (Score).
+                // Aktivität BREAK_GAME: Spiel steht still
                 if (radius <= 5) {
                     this.onBallPlayer = <HTMLElement>document.querySelector("#onBall");
                     this.onBallPlayer.innerHTML = this.jerseyNum;
                     activityPlayer = Activity.BREAK_GAME;
                 }    
             } 
+            // Wenn Radius > 130, wird der Spieler wieder auf die Startposition gesetzt.
             if (radius > 130) {
                 this.position.set(xDefaultPos, yDefaultPos);
             }

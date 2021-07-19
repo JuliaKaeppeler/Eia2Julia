@@ -17,6 +17,7 @@ var Soccer;
                 this.position = new Soccer.Vector(x, y);
             this.velocity = new Soccer.Vector(a, b);
         }
+        // Linesman wird gezeichnet
         draw() {
             Soccer.crc2.beginPath();
             Soccer.crc2.arc(this.position.x, this.position.y, 8, 0, 2 * Math.PI);
@@ -25,8 +26,10 @@ var Soccer;
             Soccer.crc2.closePath();
         }
         move(_timeslice) {
-            this.position.add(this.velocity);
+            this.position.add(this.velocity); // Geschwindigigkeit wird an die Position übergeben. 
             // Kollision auf der x-Achse
+            // Wenn die Position + 10 > 800 ist oder die Position - 5 < 0, dann soll die Geschwindigkeit auf -this.velocity.x gesetzt werden, 
+            // da sonst der Linesman aus dem Canvas gehen würde.
             if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
                 this.velocity.x = -this.velocity.x;
             }
