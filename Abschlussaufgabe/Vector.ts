@@ -1,3 +1,4 @@
+// In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 namespace Soccer {
 
     export class Vector {

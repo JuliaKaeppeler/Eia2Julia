@@ -1,4 +1,5 @@
 "use strict";
+// In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 var Soccer;
 (function (Soccer) {
     class Player extends Soccer.Moveable {
@@ -36,21 +37,7 @@ var Soccer;
             Soccer.crc2.strokeStyle = "black";
             Soccer.crc2.stroke();
             Soccer.crc2.closePath();
-            // Radius um Spieler anzeigen lassen
-            // crc2.beginPath();
-            // crc2.arc(this.position.x, this.position.y, 130, 0, 2 * Math.PI);
-            // crc2.stroke();
-            // crc2.closePath();
         }
-        // public move(_timeslice: number): void {
-        //     //Kollision
-        //     if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
-        //     this.velocity.x = -this.velocity.x;
-        //     }
-        //     if (this.position.y + 10 > 600 || this.position.y - 5 < 0) {
-        //     this.velocity.y = -this.velocity.y;
-        //     }
-        // }
         moveToBall(_positionBall) {
             let positionBall = _positionBall;
             //Abstand Ball und Spieler D=(P2-P1)

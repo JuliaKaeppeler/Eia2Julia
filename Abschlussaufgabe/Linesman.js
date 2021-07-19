@@ -1,4 +1,5 @@
 "use strict";
+//In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 var Soccer;
 (function (Soccer) {
     class Linesman extends Soccer.Moveable {
@@ -25,6 +26,7 @@ var Soccer;
         }
         move(_timeslice) {
             this.position.add(this.velocity);
+            // Kollision auf der x-Achse
             if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
                 this.velocity.x = -this.velocity.x;
             }

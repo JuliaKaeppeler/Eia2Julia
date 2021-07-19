@@ -1,4 +1,5 @@
 "use strict";
+// In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 var Soccer;
 (function (Soccer) {
     class Moveable {
@@ -7,6 +8,7 @@ var Soccer;
             let y = 600 * Math.random();
             this.position = new Soccer.Vector(x, y);
         }
+        //Kollision
         move(_timeslice) {
             this.position.add(this.velocity);
             //mit Kollision

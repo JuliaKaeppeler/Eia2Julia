@@ -1,4 +1,5 @@
 "use strict";
+// In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 var Soccer;
 (function (Soccer) {
     class Vector {

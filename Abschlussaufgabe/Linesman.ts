@@ -1,3 +1,4 @@
+//In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 namespace Soccer {
 
     export class Linesman extends Moveable {
@@ -30,13 +31,13 @@ namespace Soccer {
             crc2.closePath();
             }
 
-            public move(_timeslice: number): void {
-                this.position.add(this.velocity);
-                
-                if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
-                this.velocity.x = -this.velocity.x;
-                }
+        public move(_timeslice: number): void {
+            this.position.add(this.velocity);
+            // Kollision auf der x-Achse
+            if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
+            this.velocity.x = -this.velocity.x;
             }
+        }
         
 
 

@@ -1,3 +1,4 @@
+// In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 namespace Soccer {
 
     export class Ball extends Moveable {
@@ -40,32 +41,36 @@ namespace Soccer {
         }
 
         public move(_timeslice: number): void { 
-            //gate first Team, left
-            let posLeftX: number = 0 - this.position.x; //Differenz berechnen von Ball posx und player posx
-            let posLeftY: number = 300 - this.position.y; //Differenz berechnen von Ball posy und player posy
-            let radiusLeft: number = Math.hypot(posLeftY, posLeftX);
-            //gate secondTeam, right
-            let posRightX: number = 800 - this.position.x; //Differenz berechnen von Ball posx und player posx
-            let posRightY: number = 300 - this.position.y; //Differenz berechnen von Ball posy und player posy
-            let radiusRight: number = Math.hypot(posRightX, posRightY);
-
-            let differenceVector: Vector = Vector.getDifference(this.target, this.position); // weil Static
-            this.velocity = new Vector(differenceVector.x / 10, differenceVector.y / 10);
-            if (differenceVector.length <= 10) {
-                this.velocity.x = 0;
-                this.velocity.y = 0;
+            //Tor links - Team 1
+            let posLeftX: number = 0 - this.position.x; //Berechnung: Abstand zwischen Tor links und Ball auf der x-Achse
+            let posLeftY: number = 300 - this.position.y; //Berechnung: Abstand zwischen Tor links und Ball auf der y-Achse
+            let radiusLeft: number = Math.hypot(posLeftY, posLeftX); //Berechnung: Radius mit Math.hypot, damit das Programm jede x- und y-Stelle kennt.
+            //Tor rechts - Team 2
+            let posRightX: number = 800 - this.position.x; //Berechnung: Abstand zwischen Tor rechts und Ball auf der x-Achse
+            let posRightY: number = 300 - this.position.y; //Berechnung: Abstand zwischen Tor links und Ball auf der y-Achse
+            let radiusRight: number = Math.hypot(posRightX, posRightY); //Berechnung: Radius mit Math.hypot, damit das Programm jede x- und y-Stelle kennt.
+            // Geschwindigkeit
+            let differenceVector: Vector = Vector.getDifference(this.target, this.position); // Berechnung: Abstand bzw. Vector zwischen Ziel (target: Click von Nutzer) und Position vom Ball
+            this.velocity = new Vector(differenceVector.x / 10, differenceVector.y / 10); // Berechnung: Geschwindigkeit vom Ball: Der Abstand zwischen Ziel und Position vom Ball wird jeweils (x, y) durch 10 geteilt, damit der Ball langsamer wird.
+            if (differenceVector.length <= 10) { // wenn der Abstand zwischen Ziel und Position vom Ball (also die Länge des Vectors) <= 10 ist, dann stoppt der Ball.
+                this.velocity.x = 0; // Geschwindigkeit (x) also auf 0
+                this.velocity.y = 0; // Geschwindigkeit (y) also auf 0
             }
-            this.position.add(this.velocity);
+            this.position.add(this.velocity); //Geschwindigkeit an Position
 
-            if (radiusLeft <= 50) { //wenn Radius kleiner gleich 50
-                this.goalLeft = <HTMLElement>document.querySelector("#goalTeam2"); 
-                this.goal1++;
-                this.goalLeft.innerHTML = this.goal1  + "";
+            // Tor links
+            // Wenn der Radius (Abstand Tor links und Ball) <= 50 ist, wird ein Tor dazugerechnet und das Spiel stoppt.
+            // Daraufhin wird der Ball auf die Startposition zurück gesetzt.
+            if (radiusLeft <= 50) { 
+                this.goalLeft = <HTMLElement>document.querySelector("#goalTeam2"); // HTMLElement mit id="goalTeam2"
+                this.goal1++; // Tor dazu rechnen mit ++
+                this.goalLeft.innerHTML = this.goal1  + ""; //Wird mit innerHTML übergeben und auf der Webseite angezeigt
                 activityPlayer = Activity.BREAK_GAME;
-                this.position.set(this.startPosition.x, this.startPosition.y);
-                this.target.set(this.startPosition.x, this.startPosition.y);
+                this.position.set(this.startPosition.x, this.startPosition.y); 
+                this.target.set(this.startPosition.x, this.startPosition.y); 
                 }
-
+            
+            // gleiches git für Tor rechts, wenn radiusRight <= 50
             if (radiusRight <= 50) {
                 this.goalRight = <HTMLElement>document.querySelector("#goalTeam1"); 
                 this.goal2++;
@@ -74,14 +79,6 @@ namespace Soccer {
                 this.position.set(this.startPosition.x, this.startPosition.y);
                 this.target.set(this.startPosition.x, this.startPosition.y);
                 }
-
-            //mit Kollision
-            if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
-                this.velocity.x = -this.velocity.x;
-            }
-            if (this.position.y + 10 > 600 || this.position.y - 5 < 0) {
-                this.velocity.y = -this.velocity.y;
-            }
         }
 
 

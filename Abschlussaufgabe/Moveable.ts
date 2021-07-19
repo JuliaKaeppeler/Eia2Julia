@@ -1,3 +1,4 @@
+// In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 namespace Soccer {
 
     export abstract class Moveable {
@@ -11,7 +12,8 @@ namespace Soccer {
         let y: number = 600 * Math.random();
         this.position = new Vector(x, y);
         }
-
+        
+        //Kollision
         public move(_timeslice: number): void {
             this.position.add(this.velocity);
             //mit Kollision

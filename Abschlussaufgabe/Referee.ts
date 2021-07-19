@@ -1,3 +1,4 @@
+// In Zusammenarbeit mit Karen Josten und Rebecca Räschke
 namespace Soccer {
 
     export class Referee extends Moveable {
@@ -28,10 +29,10 @@ namespace Soccer {
             crc2.closePath();
             }
 
+
         public move(_timeslice: number): void {
             this.position.add(this.velocity);
-                
-            //mit Kollision
+            // Kollision x und y
             if (this.position.x + 10 > 800 || this.position.x - 5 < 0) {
             this.velocity.x = -this.velocity.x;
             }
